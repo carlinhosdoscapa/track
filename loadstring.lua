@@ -1,8 +1,8 @@
 
 repeat task.wait() until game:IsLoaded()
 getgenv().Hermanos_Settings = {
-	['key'] = 'ab76e030-bd6c-45d2-bc1d-ac32eee25632',
-	['PC'] = 'DDC-1',
+	['key'] = 'f0b60f7a-9097-478e-92ea-ab1541043a54',
+	['PC'] = '[LOCAL] SERVER - 1',
 
 	['webhooks'] = {
 		['fullmoon'] = 'https://discord.com/api/webhooks/',
@@ -45,5 +45,5 @@ getgenv().SettingFarm ={
 
 
 
-getgenv().Key = "2f7ba99a895809cf612043f5" 
+getgenv().Key = "1400785d3f69359db5dbc06f" 
 loadstring(game:HttpGet("https://raw.githubusercontent.com/obiiyeuem/vthangsitink/main/BananaCat-kaitunBF.lua"))()
