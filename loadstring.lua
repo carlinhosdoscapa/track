@@ -31,7 +31,7 @@ local Teleporting = false;
 local Config = {
     RejoinIfHighPing = {
         Enable = true;
-        Ping = 1500
+        Ping = 3000
     }
 }
 
