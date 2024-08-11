@@ -1,5 +1,13 @@
+-- WAIT GAME LOADER
 
 repeat task.wait() until game:IsLoaded()
+repeat task.wait() until game.Players
+repeat task.wait() until game.Players.LocalPlayer
+repeat task.wait() until game.Players.LocalPlayer:FindFirstChild("PlayerGui")
+repeat task.wait() until game.Players.LocalPlayer.PlayerGui:FindFirstChild("Main");
+
+-- AUTO TRACKER HERMANOS
+
 getgenv().Hermanos_Settings = {
 	['key'] = 'f0b60f7a-9097-478e-92ea-ab1541043a54',
 	['PC'] = '[LOCAL] SERVER - 1',
@@ -14,13 +22,61 @@ getgenv().Hermanos_Settings = {
 	['Accessories'] = {'Dark Coat', 'Leviathan Shield','Leviathan Crown', 'Pale Scarf', 'Kitsune Mask', 'Kitsune Ribbon'},
 	['Fruit'] = {'Kitsune', 'Leopard', 'Dragon',  'Spirit', 'Control', 'Venom', 'Shadow', 'Dough','Mammoth', 'T-Rex'},
 }
+
 task.spawn(function() loadstring(game:HttpGet('https://raw.githubusercontent.com/hermanos-dev/hermanos-script/main/script.lua'))() end)	
 
-repeat task.wait() until game:IsLoaded()
-repeat task.wait() until game.Players
-repeat task.wait() until game.Players.LocalPlayer
-repeat task.wait() until game.Players.LocalPlayer:FindFirstChild("PlayerGui")
-repeat task.wait() until game.Players.LocalPlayer.PlayerGui:FindFirstChild("Main");
+-- RELOAD IF PING > 1500
+
+local Teleporting = false;
+local Config = {
+    RejoinIfHighPing = {
+        Enable = true;
+        Ping = 1500
+    }
+}
+
+GetPing = function()
+    return game:GetService("Stats").Network.ServerStatsItem["Data Ping"]:GetValue()
+end
+
+task.spawn(function()
+    while task.wait() do
+        if Config.RejoinIfHighPing.Enable and GetPing() > Config.RejoinIfHighPing.Ping then
+            game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, game.JobId, game:GetService("Players").LocalPlayer)
+        end
+    end
+end)
+
+game:GetService("CoreGui").RobloxPromptGui.promptOverlay.ChildAdded:Connect(function(child)
+    if Teleporting then return end
+
+    if child.Name == 'ErrorPrompt' and child:FindFirstChild('MessageArea') and child.MessageArea:FindFirstChild("ErrorFrame") then
+        local ErrorTitle = child.TitleFrame.ErrorTitle.Text
+        local ErrorMessage = child.MessageArea.ErrorFrame.ErrorMessage.Text
+        task.wait()
+        
+        if ErrorTitle ~= 'Teleport Failed' then 
+            Teleporting = true
+            print("Attempting to rejoin due to error: " .. ErrorMessage)
+            
+            local success, err = pcall(function()
+                game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, game.JobId, game:GetService("Players").LocalPlayer)  
+            end)
+            
+            if not success then
+                print("Failed to teleport: " .. err)
+                Teleporting = false
+            else
+                task.delay(2, function()
+                    Teleporting = false
+                end)
+            end
+        end
+    end
+end)
+
+-- AUTO FARM SCRIPT
+
 _G.Team = "Pirate" -- Marine / Pirate
 
 getgenv().Key = "MARU-CQ4OC-5XUTJ-HW6T-TO7FF-XYFP5"
