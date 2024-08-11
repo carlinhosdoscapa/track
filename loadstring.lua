@@ -91,7 +91,7 @@ _G.Settings_Melee = { -- หมัดที่จะทำ
     ['SharkmanKarate'] = true,
     ['ElectricClaw'] = true,
     ['DragonTalon'] = true,
-    ['Godhuman'] = true
+    ['Godhuman'] = false
 }
 _G.FarmMastery_Settings = {
     ['Melee'] = true,
@@ -112,14 +112,14 @@ _G.SwordSettings = { -- ดาบที่จะทำ
     ['Shisui'] = false,
     ['Saddi'] = false,
     ['Wando'] = false,
-    ['Yama'] = true,
-    ['Rengoku'] = true,
+    ['Yama'] = false,
+    ['Rengoku'] = false,
     ['Canvander'] = true,
     ['BuddySword'] = true,
     ['TwinHooks'] = true,
     ['HallowScryte'] = true,
     ['TrueTripleKatana'] = false,
-    ['CursedDualKatana'] = true
+    ['CursedDualKatana'] = false
 }
 _G.SharkAnchor_Settings = {
     ["Enabled_Farm"] = false,
@@ -127,7 +127,7 @@ _G.SharkAnchor_Settings = {
 _G.GunSettings = { -- ปืนที่จะทำ
     ['Kabucha'] = true,
     ['SerpentBow'] = true,
-    ['SoulGuitar'] = true
+    ['SoulGuitar'] = false
 }
 
 loadstring(game:HttpGet("https://raw.githubusercontent.com/xshiba/MaruBitkub/main/Mobile.lua"))()
