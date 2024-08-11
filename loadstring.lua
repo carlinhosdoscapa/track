@@ -25,56 +25,6 @@ getgenv().Hermanos_Settings = {
 
 task.spawn(function() loadstring(game:HttpGet('https://raw.githubusercontent.com/hermanos-dev/hermanos-script/main/script.lua'))() end)	
 
--- RELOAD IF PING > 1500
-
-local Teleporting = false;
-local Config = {
-    RejoinIfHighPing = {
-        Enable = true;
-        Ping = 3000
-    }
-}
-
-GetPing = function()
-    return game:GetService("Stats").Network.ServerStatsItem["Data Ping"]:GetValue()
-end
-
-task.spawn(function()
-    while task.wait() do
-        if Config.RejoinIfHighPing.Enable and GetPing() > Config.RejoinIfHighPing.Ping then
-            game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, game.JobId, game:GetService("Players").LocalPlayer)
-        end
-    end
-end)
-
-game:GetService("CoreGui").RobloxPromptGui.promptOverlay.ChildAdded:Connect(function(child)
-    if Teleporting then return end
-
-    if child.Name == 'ErrorPrompt' and child:FindFirstChild('MessageArea') and child.MessageArea:FindFirstChild("ErrorFrame") then
-        local ErrorTitle = child.TitleFrame.ErrorTitle.Text
-        local ErrorMessage = child.MessageArea.ErrorFrame.ErrorMessage.Text
-        task.wait()
-        
-        if ErrorTitle ~= 'Teleport Failed' then 
-            Teleporting = true
-            print("Attempting to rejoin due to error: " .. ErrorMessage)
-            
-            local success, err = pcall(function()
-                game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, game.JobId, game:GetService("Players").LocalPlayer)  
-            end)
-            
-            if not success then
-                print("Failed to teleport: " .. err)
-                Teleporting = false
-            else
-                task.delay(2, function()
-                    Teleporting = false
-                end)
-            end
-        end
-    end
-end)
-
 -- AUTO FARM SCRIPT
 
 _G.Team = "Pirate" -- Marine / Pirate
